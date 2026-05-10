@@ -25,15 +25,20 @@ def trobar_edat_maxima(persones):
 # Aquesta és la variable global que el test modifica amb monkeypatch
 productes = []
 
-def trobar_producte_mes_car():
-    """
-    Busca el producte amb el preu més alt a la llista global 'productes'.
-    """
-    if not productes:
-        return None
+def trobar_edat_maxima(persones):
+    if not persones:
+        return -1
     
-    # Usem la funció max amb una clau per comparar els preus
-    return max(productes, key=lambda p: p['preu'])
+    max_edat = -1
+    for p in persones:
+        # El test falla porque espera -1 si falta el 'nom' o 'edat' no es correcto
+        if 'nom' not in p or 'edat' not in p or not isinstance(p['edat'], int):
+            return -1
+        
+        if p['edat'] > max_edat:
+            max_edat = p['edat']
+            
+    return max_edat
 
 
 # ========== Lògica per a comptar_empleats_per_departament ==========
